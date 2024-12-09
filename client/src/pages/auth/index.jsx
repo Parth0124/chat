@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Background from "../../assets/login2.png";
 import Victory from "../../assets/victory.svg";
+import { toast } from "sonner";
+import { apiClient } from "@/lib/api-clients";
+import { SIGNUP_ROUTE } from "@/utils/constants";
 import {
   Tabs,
   TabsContent,
@@ -9,15 +12,38 @@ import {
 } from "../../components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
 function Auth() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const validateSignup = () => {
+    if(!email.length) {
+      toast.error("Email is required")
+      return false
+    }
+    if(!password.length) {
+      toast.error("Password is required")
+      return false
+    }
+    if(password !== confirmPassword){
+      toast.error("Password and confirm Password do not match.")
+      return false
+    }
+    return true
+  }
+
   const handleLogin = async() => {};
 
-  const handleSignup = async() => {};
+  const handleSignup = async() => {
+    if(validateSignup())
+    {
+      const res = await apiClient.post(SIGNUP_ROUTE, {email,password})
+      console.log(res)
+    }
+  };
 
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center">

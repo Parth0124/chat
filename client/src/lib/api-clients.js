@@ -1,4 +1,4 @@
-import { HOST } from "@/utils/constants";
+import { HOST } from "@/utils/constants.js";
 import axios from 'axios'
 
 export const apiClient = axios.create({

@@ -1,4 +1,3 @@
-import { type } from "jquery";
 import mongoose, { mongo } from "mongoose";
 import { genSalt } from "bcrypt";
 

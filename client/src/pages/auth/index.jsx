@@ -13,10 +13,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useAppStore } from "@/store";
 
 function Auth() {
 
-
+  const { setUserInfo } = useAppStore();
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState("");
@@ -54,8 +55,10 @@ function Auth() {
     if(validateLogin)
     {
       const res = await apiClient.post(LOGIN_ROUTE, {email,password}, {withCredentials:true})
+      console.log(res.data);
       if(res. data.user.profileSetup)
       {
+        setUserInfo(res.data.user);
         navigate('/chat');
       }
       else
@@ -63,6 +66,7 @@ function Auth() {
         navigate('/profile')
       }
       console.log(res)
+      console.log(useAppStore.getState());
     }
   };
 
@@ -73,6 +77,7 @@ function Auth() {
     }
     if(res.status === 201)
     {
+      setUserInfo(res.data.user);
       navigate('/profile');
     }
   };
